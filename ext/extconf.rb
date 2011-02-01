@@ -49,31 +49,31 @@ def check_libmemcached
       raise "'#{cmd}' failed" unless system(cmd)
 
       puts "Patching libmemcached source."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached.patch") 
+      puts(cmd = "#{patch} -p1 < libmemcached.patch") 
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached with SASL support."
-      puts(cmd = "#{patch} -p1 -Z < sasl.patch")
+      puts(cmd = "#{patch} -p1 < sasl.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached for get_from_last support."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached-2.patch")
+      puts(cmd = "#{patch} -p1 < libmemcached-2.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached for no block prepend and append support."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached-3.patch")
+      puts(cmd = "#{patch} -p1 < libmemcached-3.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached for noop hash support."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached-4.patch")
+      puts(cmd = "#{patch} -p1 < libmemcached-4.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached for get_len command."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached-5.patch")
+      puts(cmd = "#{patch} -p1 < libmemcached-5.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Patching libmemcached for failure count breakage."
-      puts(cmd = "#{patch} -p1 -Z < libmemcached-6.patch")
+      puts(cmd = "#{patch} -p1 < libmemcached-6.patch")
       raise "'#{cmd}' failed" unless system(cmd) or ENV['DEV']
 
       puts "Touching aclocal.m4  in libmemcached."
