@@ -4,6 +4,7 @@ require 'rbconfig'
 HERE = File.expand_path(File.dirname(__FILE__))
 BUNDLE = Dir.glob("libmemcached-*.tar.gz").first
 BUNDLE_PATH = BUNDLE.sub(".tar.gz", "")
+GMAKE       = Config::CONFIG['host_os'].downcase =~ /bsd|solaris/ ? "gmake" : "make"
 
 SOLARIS_32 = RbConfig::CONFIG['target'] == "i386-pc-solaris2.10"
 
@@ -13,7 +14,6 @@ $EXTRA_CONF = " --disable-64bit" if SOLARIS_32
 $LDFLAGS = "#{RbConfig::CONFIG['LDFLAGS']} #{$LDFLAGS} -L#{RbConfig::CONFIG['libdir']}".gsub("$(ldflags)", "").gsub("-fno-common", "")
 $CXXFLAGS = " -std=gnu++98 #{$CFLAGS}"
 $CPPFLAGS = $ARCH_FLAG = $DLDFLAGS = ""
-$GMAKE       = Config::CONFIG['host_os'].downcase =~ /bsd|solaris/ ? "gmake" : "make"
 
 if ENV['DEBUG']
   puts "Setting debug flags."
