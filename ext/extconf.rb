@@ -13,6 +13,7 @@ $EXTRA_CONF = " --disable-64bit" if SOLARIS_32
 $LDFLAGS = "#{RbConfig::CONFIG['LDFLAGS']} #{$LDFLAGS} -L#{RbConfig::CONFIG['libdir']}".gsub("$(ldflags)", "").gsub("-fno-common", "")
 $CXXFLAGS = " -std=gnu++98 #{$CFLAGS}"
 $CPPFLAGS = $ARCH_FLAG = $DLDFLAGS = ""
+$GMAKE       = Config::CONFIG['host_os'].downcase =~ /bsd|solaris/ ? "gmake" : "make"
 
 if ENV['DEBUG']
   puts "Setting debug flags."
@@ -83,10 +84,10 @@ def check_libmemcached
         puts(cmd = "env CFLAGS='-fPIC #{$CFLAGS}' LDFLAGS='-fPIC #{$LDFLAGS}' ./configure --prefix=#{HERE} --without-memcached --disable-shared --disable-utils --disable-dependency-tracking #{$EXTRA_CONF} 2>&1")
         raise "'#{cmd}' failed" unless system(cmd)
 
-        puts(cmd = "make CXXFLAGS='#{$CXXFLAGS}' || true 2>&1")
+        puts(cmd = "#{GMAKE} CXXFLAGS='#{$CXXFLAGS}' || true 2>&1")
         raise "'#{cmd}' failed" unless system(cmd)
 
-        puts(cmd = "make install || true 2>&1")
+        puts(cmd = "#{GMAKE} install || true 2>&1")
         raise "'#{cmd}' failed" unless system(cmd)
       end
 
